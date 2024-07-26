@@ -47,6 +47,8 @@ for x in entriesAutomate:
     if x == '#pagetopright':
         continue
 
+
+
     else:
         reqIndividual = requests.get(urlIndividual)
         contentIndividual = BeautifulSoup(reqIndividual.text, 'html.parser')
@@ -58,7 +60,8 @@ for x in entriesAutomate:
                 entries.append([entry_title.text, single_bib.text])
                 print(entry_title.text, single_bib.text + "\n")
         df = pd.DataFrame(entries, columns=['Entry Title', 'Bibliography'])
-        df.to_csv('bibForAll.csv', mode='a', encoding='utf-8-sig')
+        dfFixed = df.replace('\n', ' ', regex=True)
+        dfFixed.to_csv('bibForAll.csv', mode='a', encoding='utf-8-sig', header=False)
 
 
 
